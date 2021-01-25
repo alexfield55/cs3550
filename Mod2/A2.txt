@@ -1,0 +1,7 @@
+Alex Field
+CS3550
+Assignment 2 Normal forms
+
+1. Customers Table - I believe this to be in 2NF as it, there is one piece of data in each field, there is no composite key, but there is a transitive dependency between ContactName and ContactTitle
+2. Orders - I believe this is in 2NF as all ShipAddress, ShipCity, ShipRegion, ShipPostalCode, ShipCountry seem to be transitively dependent on ShipName
+3. Products - I believe this to be in 3NF as every attribute is functionally dependent on the PK.
