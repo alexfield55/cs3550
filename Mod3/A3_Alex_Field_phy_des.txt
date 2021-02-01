@@ -1,0 +1,14 @@
+Alex Field
+CS3550
+A3 Physical Design
+
+
+1.  Students table - 3NF
+    Section table - 3NF
+    Class_Schedule (associative table I added for normalization) - 2NF
+    Class table - 3NF
+
+2.  Addiontial enterprise, or just general data constraint would be that dates and times are non negative
+    I felt that adding a class schedule associative table would help the many students taking many sections and many sections having many students relationship.
+
+3.  I chose to not use a horizontal split, althought I think that realistically the section table and class table could be split in this fashion. I think that adding class name, description, and credit hours would be so commonly queried when querying section information, that it would probably just be faster to include that information in the section table, although it would in turn denormalize it to 1st or 2nd form.
