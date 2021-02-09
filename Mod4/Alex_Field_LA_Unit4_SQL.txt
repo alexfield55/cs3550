@@ -1,0 +1,132 @@
+-- All examples from book
+
+-- Example 5.1
+
+Use master;
+create database test1;
+
+-- Example 5.1
+
+Use master;
+create database test2
+ON (NAME=test2_dat, FILENAME='c:\temp\test2.mdf', SIZE=10, MAXSIZE=100, FILEGROWTH=5)
+LOG ON (NAME=test2_log, FILENAME='c:\temp\test2.ldf', SIZE=10, MAXSIZE=100, FILEGROWTH=10);
+
+--Example 5.4
+
+Use sample;
+create table department
+(
+	dept_no VARCHAR(4) NOT NULL,
+	dept_name VARCHAR(25) NOT NULL,
+	location VARCHAR(30) NOT NULL
+
+);
+
+create table project
+(
+	project_no VARCHAR(4) NOT NULL,
+	project_name VARCHAR(30) NOT NULL,
+	budget FLOAT(30) NOT NULL
+);
+
+-- Default constraint
+
+-- example 5.6 of the book
+-- when project is created, I want it to default to p1
+
+use sample;
+create table projects2
+(
+	project_no VARCHAR(4) DEFAULT 'p1',
+	project_name VARCHAR(15) NOT NULL,
+	budget FLOAT NULL
+);
+
+
+-- project_name to be unique
+
+use sample;
+
+drop table if exists projects2
+
+create table projects2
+(
+	project_no VARCHAR(4) DEFAULT 'p1',
+	project_name VARCHAR(15) NOT NULL,
+	budget FLOAT NULL
+	constraint unique_project_name UNIQUE (project_name)
+)
+
+-- example 5.9
+-- each customer has a customer group, the group has limited values
+-- values are 'c1', 'c2', 'c10'
+
+use sample;
+create table customer
+(
+	cust_no INTEGER NOT NULL,
+	cust_group VARCHAR(3)
+	CHECK (cust_group in ('c1','c2','c10'))
+)
+
+
+create table projects2
+(
+	project_no VARCHAR(4) DEFAULT 'p1',
+	project_name VARCHAR(15) NOT NULL,
+	budget FLOAT NULL
+	constraint unique_project_name UNIQUE (project_name)
+	constraint check_budget_for_positive CHECK (budget >= 0)
+)
+
+-- Example 5.11
+-- Using SQL to create primary and foreign key relationships, update and delete rules not include
+
+
+drop database if exists sample2
+create database sample2
+go
+use sample2;
+create table department
+(
+	dept_no VARCHAR(4) NOT NULL,
+	dept_name VARCHAR(25) NOT NULL,
+	location VARCHAR(30) NOT NULL,
+	constraint prim_dept primary key (dept_no)
+);
+
+create table project
+(
+	project_no VARCHAR(4) NOT NULL,
+	project_name VARCHAR(30) NOT NULL,
+	budget FLOAT(30) NOT NULL,
+	constraint prim_proj primary key (project_no)
+);
+
+create table employee
+(
+	emp_no integer NOT NULL,
+	emp_fname varchar(20) NOT NULL,
+	emp_lname varchar(20) NOT NULL,
+	dept_no varchar(4) NOT NULL,
+	constraint prim_emp primary key (emp_no),
+	constraint foreign_emp foreign key (dept_no) references department(dept_no)
+);
+
+create table works_on
+(
+	emp_no integer NOT NULL,
+	project_no varchar(4) not null,
+	job varchar(15) null,
+	enter_date date null,
+	constraint prim_works primary key(emp_no, project_no),
+	constraint foreign1_works foreign key(emp_no) references employee(emp_no),
+	constraint foreign2_works foreign key(project_no) references project(project_no)
+);
+
+
+
+
+
+
